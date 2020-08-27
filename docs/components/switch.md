@@ -36,4 +36,15 @@ Use the available custom properties to make the switch a different size.
 <sl-switch style="--width: 80px; --height: 30px; --thumb-size: 26px;"></sl-switch>
 ```
 
+### Two-sided Switches
+
+Add a label to both sides with the `prefix` slot.
+
+```html preview
+<sl-switch>
+  <span slot="prefix">Off</span>
+  On
+</sl-switch>
+```
+
 [component-metadata:sl-switch]

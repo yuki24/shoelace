@@ -121,6 +121,17 @@
   cursor: not-allowed;
 }
 
+// Prefix
+.switch__prefix {
+  display: none;
+  margin-right: 0.5em;
+}
+
+.switch--has-prefix .switch__prefix {
+  display: inline;
+}
+
+// Label
 .switch__label {
   line-height: var(--height);
   margin-left: 0.5em;

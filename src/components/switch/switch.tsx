@@ -1,4 +1,5 @@
-import { Component, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
+import { hasSlot } from '../../utilities/slot';
 
 let id = 0;
 
@@ -7,6 +8,7 @@ let id = 0;
  * @status stable
  *
  * @slot - The switch's label.
+ * @slot prefix - An optional label to display before the switch.
  *
  * @part base - The component's base wrapper.
  * @part control - The switch control.
@@ -24,7 +26,10 @@ export class Switch {
   labelId = `switch-label-${id}`;
   input: HTMLInputElement;
 
+  @Element() host: HTMLSlSwitchElement;
+
   @State() hasFocus = false;
+  @State() hasPrefix = false;
 
   /** The switch's name attribute. */
   @Prop() name: string;
@@ -59,6 +64,23 @@ export class Switch {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleLabelClick = this.handleLabelClick.bind(this);
+    this.handlePrefixClick = this.handlePrefixClick.bind(this);
+    this.updateSlots = this.updateSlots.bind(this);
+  }
+
+  componentWillLoad() {
+    this.updateSlots();
+    this.host.shadowRoot.addEventListener('slotchange', this.updateSlots);
+  }
+
+  disconnectedCallback() {
+    this.host.shadowRoot.removeEventListener('slotchange', this.updateSlots);
+  }
+
+  updateSlots() {
+    this.hasPrefix = hasSlot(this.host, 'prefix');
+    console.log('hasPrefix', this.hasPrefix);
   }
 
   /** Sets focus on the switch. */
@@ -105,6 +127,21 @@ export class Switch {
     this.input.focus();
   }
 
+  handleLabelClick(event: MouseEvent) {
+    // The toggle behavior is different when a prefix exists. Normally, clicking the label toggles the control, but if a
+    // prefix exists, clicking the label should always check the control.
+    if (this.hasPrefix) {
+      event.preventDefault();
+      this.checked = true;
+    }
+  }
+
+  handlePrefixClick(event: MouseEvent) {
+    // Clicking the prefix should always uncheck the control
+    event.preventDefault();
+    this.checked = false;
+  }
+
   render() {
     return (
       <label
@@ -115,13 +152,17 @@ export class Switch {
           switch: true,
           'switch--checked': this.checked,
           'switch--disabled': this.disabled,
-          'switch--focused': this.hasFocus
+          'switch--focused': this.hasFocus,
+          'switch--has-prefix': this.hasPrefix
         }}
         onMouseDown={this.handleMouseDown}
       >
+        <span part="prefix" class="switch__prefix" onClick={this.handlePrefixClick}>
+          <slot name="prefix" />
+        </span>
+
         <span part="control" class="switch__control">
           <span part="thumb" class="switch__thumb" />
-
           <input
             ref={el => (this.input = el)}
             id={this.switchId}
@@ -138,7 +179,7 @@ export class Switch {
           />
         </span>
 
-        <span part="label" id={this.labelId} class="switch__label">
+        <span part="label" id={this.labelId} class="switch__label" onClick={this.handleLabelClick}>
           <slot />
         </span>
       </label>
