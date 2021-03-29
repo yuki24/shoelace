@@ -8,6 +8,9 @@ _During the beta period, these restrictions may be relaxed in the event of a mis
 
 ## Next
 
+- 🚨 BREAKING: renamed `setFocus()` to `focus()` in button, checkbox, input, menu item, radio, range, rating, select, switch, and tab
+- 🚨 BREAKING: renamed `removeFocus()` to `blur()` in button, checkbox, input, menu item, radio, range, rating, select, switch, and tab
+- Added `click()` method to `sl-button`
 - Renamed `components.json` to `metadata.json`
 - Updated to the prerelease versions of LitElement and lit-html
 
