@@ -33,8 +33,8 @@
     "build": "node scripts/build.cjs",
     "prepublishOnly": "npm run build",
     "prettier": "prettier --write --loglevel warn .",
-    "test": "web-test-runner \"tests/**/*.test.js\" --node-resolve",
-    "test:watch": "web-test-runner \"tests/**/*.test.js\" --node-resolve --watch"
+    "test": "web-test-runner \"tests/**/*.test.js\" --node-resolve --puppeteer",
+    "test:watch": "web-test-runner \"tests/**/*.test.js\" --node-resolve --puppeteer --watch"
   },
   "dependencies": {
     "@popperjs/core": "^2.7.0",
@@ -48,6 +48,7 @@
     "@types/color": "^3.0.1",
     "@types/resize-observer-browser": "^0.1.5",
     "@web/test-runner": "^0.12.17",
+    "@web/test-runner-puppeteer": "^0.9.3",
     "bluebird": "^3.7.2",
     "bootstrap-icons": "^1.4.1",
     "browser-sync": "^2.26.14",

@@ -1,3 +1,5 @@
+import { puppeteerLauncher } from '@web/test-runner-puppeteer';
+
 export default {
   testRunnerHtml: testFramework =>
     `<html>
