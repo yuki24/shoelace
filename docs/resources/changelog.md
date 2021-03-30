@@ -6,13 +6,18 @@ Components with the <sl-badge type="warning" pill>Experimental</sl-badge> badge 
 
 _During the beta period, these restrictions may be relaxed in the event of a mission-critical bug._ 🐛
 
-## Next
+## 2.0.0-beta.36
 
 - 🚨 BREAKING: renamed `setFocus()` to `focus()` in button, checkbox, input, menu item, radio, range, rating, select, switch, and tab
 - 🚨 BREAKING: renamed `removeFocus()` to `blur()` in button, checkbox, input, menu item, radio, range, rating, select, switch, and tab
 - Added `click()` method to `sl-button`
+- Fixed a bug where toggling `open` on `sl-drawer` would skip the transition
+- Fixed a bug where `sl-color-picker` could be opened when disabled
+- Fixed a bug in `sl-color-picker` that caused erratic slider behaviors [#388](https://github.com/shoelace-style/shoelace/issues/388) [#389](https://github.com/shoelace-style/shoelace/issues/389)
+- Fixed a bug where `sl-details` wouldn't always render the correct height when open initially [#357](https://github.com/shoelace-style/shoelace/issues/357)
 - Renamed `components.json` to `metadata.json`
 - Updated to the prerelease versions of LitElement and lit-html
+- Updated to Bootstrap Icons 1.4.1
 
 ## 2.0.0-beta.35
 
