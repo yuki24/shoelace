@@ -4,7 +4,25 @@ import sinon from 'sinon';
 
 import '../../../dist/components/button/button.js';
 
-describe('sl-button', () => {
+describe('<sl-button>', () => {
+  const types = ['primary', 'success', 'info', 'warning', 'danger'];
+  const sizes = ['small', 'medium', 'large'];
+
+  types.map(type => {
+    sizes.map(size => {
+      it(`${size} ${type} button should be accessible`, async () => {
+        const el = await createFixture(html` <sl-button type=${type} size=${size}>Click me</sl-button> `);
+        await expect(el).to.be.accessible({
+          //
+          // TODO: seems to check against AAA instead of AA (which we still currently fail, but let's wait to solve that
+          // until this test is comparing the correct contrast ratio.
+          //
+          ignoredRules: ['color-contrast']
+        });
+      });
+    });
+  });
+
   it('should render as <button>', async () => {
     const el = await createFixture(html` <sl-button>Click me</sl-button> `);
     const base = el.shadowRoot.querySelector('[part="base"]');

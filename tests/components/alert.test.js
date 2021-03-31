@@ -4,7 +4,17 @@ import sinon from 'sinon';
 
 import '../../../dist/components/alert/alert.js';
 
-describe('sl-alert', () => {
+describe('<sl-alert>', () => {
+  const types = ['primary', 'success', 'info', 'warning', 'danger'];
+
+  types.map(type => {
+    it(`${type} alert should be accessible`, async () => {
+      const el = await createFixture(html` <sl-alert type=${type} open>I am an alert</sl-alert> `);
+      const base = el.shadowRoot.querySelector('[part="base"]');
+      await expect(base).to.be.accessible();
+    });
+  });
+
   it('should not be visible without open attribute', async () => {
     const el = await createFixture(html` <sl-alert>I am an alert</sl-alert> `);
     const base = el.shadowRoot.querySelector('[part="base"]');
