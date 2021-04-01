@@ -8,7 +8,10 @@ _During the beta period, these restrictions may be relaxed in the event of a mis
 
 ## Next
 
+- Fixed a bug in `sl-tooltip` where events weren't properly cleaned up on disconnect
+- Fixed a bug in `sl-tooltip` where they wouldn't display after toggling `disabled` off and on again [#391](https://github.com/shoelace-style/shoelace/issues/391)
 - Improved a11y for disabled buttons that are rendered as links
+- Improved a11y for `sl-button-group`
 
 ## 2.0.0-beta.36
 
