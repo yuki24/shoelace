@@ -36,31 +36,24 @@ describe('<sl-button>', () => {
 
   it('should gain focus when calling focus()', async () => {
     const el = await fixture(html` <sl-button>Click me</sl-button> `);
+    const handler = sinon.spy();
+
+    el.addEventListener('sl-focus', handler);
     el.focus();
+
     expect(el.ownerDocument.activeElement).to.equal(el);
+    expect(handler).to.have.been.calledOnce;
   });
 
   it('should lose focus when calling blur()', async () => {
     const el = await fixture(html` <sl-button>Click me</sl-button> `);
+    const handler = sinon.spy();
+
+    el.addEventListener('sl-blur', handler);
     el.focus();
     el.blur();
+
     expect(el.ownerDocument.activeElement).to.not.equal(el);
-  });
-
-  it('should emit sl-focus when gaining focus', async () => {
-    const el = await fixture(html` <sl-button>Click me</sl-button> `);
-    const handler = sinon.spy();
-    el.addEventListener('sl-focus', handler);
-    el.click();
-    expect(handler).to.have.been.calledOnce;
-  });
-
-  it('should emit sl-blur when losing focus', async () => {
-    const el = await fixture(html` <sl-button>Click me</sl-button> `);
-    const handler = sinon.spy();
-    el.addEventListener('sl-blur', handler);
-    el.click();
-    el.blur();
     expect(handler).to.have.been.calledOnce;
   });
 });
