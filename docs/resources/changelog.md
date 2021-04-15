@@ -15,6 +15,7 @@ _During the beta period, these restrictions may be relaxed in the event of a mis
 - Fixed a bug where `sl-badge` used `--sl-color-white` instead of the correct design tokens [#407](https://github.com/shoelace-style/shoelace/issues/407)
 - Fixed a bug in `sl-dialog` and `sl-drawer` where the escape key would cause parent components to close
 - Fixed a race condition bug in `sl-icon` [#410](https://github.com/shoelace-style/shoelace/issues/410)
+- Fixed `sl-button` hover states being "stuck" on mobile devices
 - Improved focus trap behavior in `sl-dialog` and `sl-drawer`
 - Improved a11y in `sl-dialog` and `sl-drawer` by restoring focus to trigger on close
 - Improved a11y in `sl-radio` with Windows high contrast mode [#215](https://github.com/shoelace-style/shoelace/issues/215)

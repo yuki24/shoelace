@@ -71,10 +71,12 @@
     border-color: var(--sl-color-gray-300);
     color: var(--sl-color-gray-600);
 
-    &:hover:not(.button--disabled) {
-      background-color: var(--sl-color-primary-50);
-      border-color: var(--sl-color-primary-300);
-      color: var(--sl-color-primary-600);
+    @media (hover: hover) {
+      &:hover:not(.button--disabled) {
+        background-color: var(--sl-color-primary-50);
+        border-color: var(--sl-color-primary-300);
+        color: var(--sl-color-primary-600);
+      }
     }
 
     &:focus:not(.button--disabled) {
@@ -96,10 +98,12 @@
     border-color: var(--sl-color-primary-500);
     color: var(--sl-color-primary-text);
 
-    &:hover:not(.button--disabled) {
-      background-color: var(--sl-color-primary-400);
-      border-color: var(--sl-color-primary-400);
-      color: var(--sl-color-primary-text);
+    @media (hover: hover) {
+      &:hover:not(.button--disabled) {
+        background-color: var(--sl-color-primary-400);
+        border-color: var(--sl-color-primary-400);
+        color: var(--sl-color-primary-text);
+      }
     }
 
     &:focus:not(.button--disabled) {
@@ -121,10 +125,12 @@
     border-color: var(--sl-color-success-500);
     color: var(--sl-color-success-text);
 
-    &:hover:not(.button--disabled) {
-      background-color: var(--sl-color-success-400);
-      border-color: var(--sl-color-success-400);
-      color: var(--sl-color-success-text);
+    @media (hover: hover) {
+      &:hover:not(.button--disabled) {
+        background-color: var(--sl-color-success-400);
+        border-color: var(--sl-color-success-400);
+        color: var(--sl-color-success-text);
+      }
     }
 
     &:focus:not(.button--disabled) {
@@ -146,10 +152,12 @@
     border-color: var(--sl-color-info-500);
     color: var(--sl-color-info-text);
 
-    &:hover:not(.button--disabled) {
-      background-color: var(--sl-color-info-400);
-      border-color: var(--sl-color-info-400);
-      color: var(--sl-color-info-text);
+    @media (hover: hover) {
+      &:hover:not(.button--disabled) {
+        background-color: var(--sl-color-info-400);
+        border-color: var(--sl-color-info-400);
+        color: var(--sl-color-info-text);
+      }
     }
 
     &:focus:not(.button--disabled) {
@@ -171,10 +179,12 @@
     border-color: var(--sl-color-warning-500);
     color: var(--sl-color-warning-text);
 
-    &:hover:not(.button--disabled) {
-      background-color: var(--sl-color-warning-400);
-      border-color: var(--sl-color-warning-400);
-      color: var(--sl-color-warning-text);
+    @media (hover: hover) {
+      &:hover:not(.button--disabled) {
+        background-color: var(--sl-color-warning-400);
+        border-color: var(--sl-color-warning-400);
+        color: var(--sl-color-warning-text);
+      }
     }
 
     &:focus:not(.button--disabled) {
@@ -196,10 +206,12 @@
     border-color: var(--sl-color-danger-500);
     color: var(--sl-color-danger-text);
 
-    &:hover:not(.button--disabled) {
-      background-color: var(--sl-color-danger-400);
-      border-color: var(--sl-color-danger-400);
-      color: var(--sl-color-danger-text);
+    @media (hover: hover) {
+      &:hover:not(.button--disabled) {
+        background-color: var(--sl-color-danger-400);
+        border-color: var(--sl-color-danger-400);
+        color: var(--sl-color-danger-text);
+      }
     }
 
     &:focus:not(.button--disabled) {
@@ -226,10 +238,12 @@
   border-color: transparent;
   color: var(--sl-color-primary-500);
 
-  &:hover:not(.button--disabled) {
-    background-color: transparent;
-    border-color: transparent;
-    color: var(--sl-color-primary-400);
+  @media (hover: hover) {
+    &:hover:not(.button--disabled) {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--sl-color-primary-400);
+    }
   }
 
   &:focus:not(.button--disabled) {
