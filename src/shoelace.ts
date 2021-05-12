@@ -1,5 +1,4 @@
-export * from './utilities';
-
+// Components
 export { default as SlAlert } from './components/alert/alert';
 export { default as SlAnimation } from './components/animation/animation';
 export { default as SlAvatar } from './components/avatar/avatar';
@@ -28,12 +27,14 @@ export { default as SlMenuItem } from './components/menu-item/menu-item';
 export { default as SlMenuLabel } from './components/menu-label/menu-label';
 export { default as SlProgressBar } from './components/progress-bar/progress-bar';
 export { default as SlProgressRing } from './components/progress-ring/progress-ring';
+export { default as SlQrCode } from './components/qr-code/qr-code';
 export { default as SlRadio } from './components/radio/radio';
+export { default as SlRadioGroup } from './components/radio-group/radio-group';
 export { default as SlRange } from './components/range/range';
 export { default as SlRating } from './components/rating/rating';
 export { default as SlRelativeTime } from './components/relative-time/relative-time';
 export { default as SlResizeObserver } from './components/resize-observer/resize-observer';
-export { default as SlResponsiveEmbed } from './components/responsive-embed/responsive-embed';
+export { default as SlResponsiveMedia } from './components/responsive-media/responsive-media';
 export { default as SlSelect } from './components/select/select';
 export { default as SlSkeleton } from './components/skeleton/skeleton';
 export { default as SlSpinner } from './components/spinner/spinner';
@@ -44,3 +45,8 @@ export { default as SlTabPanel } from './components/tab-panel/tab-panel';
 export { default as SlTag } from './components/tag/tag';
 export { default as SlTextarea } from './components/textarea/textarea';
 export { default as SlTooltip } from './components/tooltip/tooltip';
+
+// Utilities
+export * from './utilities/animation';
+export * from './utilities/base-path';
+export * from './utilities/icon-library';

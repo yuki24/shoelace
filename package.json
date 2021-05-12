@@ -1,7 +1,7 @@
 {
   "name": "@shoelace-style/shoelace",
   "description": "A forward-thinking library of web components.",
-  "version": "2.0.0-beta.36",
+  "version": "2.0.0-beta.40",
   "homepage": "https://github.com/shoelace-style/shoelace",
   "author": "Cory LaViska",
   "license": "MIT",
@@ -33,6 +33,7 @@
     "build": "node scripts/build.cjs",
     "prepublishOnly": "npm run build",
     "prettier": "prettier --write --loglevel warn .",
+    "create": "node scripts/create-component.cjs",
     "test": "web-test-runner \"tests/**/*.test.js\" --node-resolve --puppeteer",
     "test:watch": "web-test-runner \"tests/**/*.test.js\" --node-resolve --puppeteer --watch"
   },
@@ -40,8 +41,9 @@
     "@popperjs/core": "^2.7.0",
     "@shoelace-style/animations": "^1.1.0",
     "color": "^3.1.3",
-    "lit": "^2.0.0-pre.1",
-    "lit-html": "^2.0.0-pre.6"
+    "lit": "^2.0.0-rc.1",
+    "lit-html": "^2.0.0-rc.2",
+    "qr-creator": "^1.0.0"
   },
   "devDependencies": {
     "@open-wc/testing": "^2.5.32",
@@ -70,9 +72,9 @@
     "sass": "^1.32.7",
     "sinon": "^10.0.0",
     "tiny-glob": "^0.2.8",
-    "tslib": "^2.1.0",
+    "tslib": "^2.2.0",
     "typedoc": "^0.20.28",
-    "typescript": "4.1.5",
+    "typescript": "^4.2.4",
     "wait-on": "^5.2.1"
   },
   "husky": {

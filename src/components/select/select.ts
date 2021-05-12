@@ -1,12 +1,16 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators';
 import { classMap } from 'lit-html/directives/class-map';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { event, EventEmitter, watch } from '../../internal/decorators';
-import styles from 'sass:./select.scss';
-import { SlDropdown, SlIconButton, SlMenu, SlMenuItem } from '../../shoelace';
-import { renderFormControl } from '../../internal/form-control';
+import { getLabelledBy, renderFormControl } from '../../internal/form-control';
 import { getTextContent } from '../../internal/slot';
 import { hasSlot } from '../../internal/slot';
+import SlDropdown from '../dropdown/dropdown';
+import SlIconButton from '../icon-button/icon-button';
+import SlMenu from '../menu/menu';
+import SlMenuItem from '../menu-item/menu-item';
+import styles from 'sass:./select.scss';
 
 let id = 0;
 
@@ -42,8 +46,8 @@ export default class SlSelect extends LitElement {
   @query('.select__hidden-select') input: HTMLInputElement;
   @query('.select__menu') menu: SlMenu;
 
-  private helpTextId = `select-help-text-${id}`;
   private inputId = `select-${++id}`;
+  private helpTextId = `select-help-text-${id}`;
   private labelId = `select-label-${id}`;
   private resizeObserver: ResizeObserver;
 
@@ -88,7 +92,7 @@ export default class SlSelect extends LitElement {
   @property({ type: Boolean, reflect: true }) pill = false;
 
   /** The select's label. Alternatively, you can use the label slot. */
-  @property() label = '';
+  @property() label: string;
 
   /** The select's help text. Alternatively, you can use the help-text slot. */
   @property({ attribute: 'help-text' }) helpText: string;
@@ -422,8 +426,16 @@ export default class SlSelect extends LitElement {
             id=${this.inputId}
             class="select__box"
             role="combobox"
-            aria-labelledby=${this.labelId}
-            aria-describedby=${this.helpTextId}
+            aria-labelledby=${ifDefined(
+              getLabelledBy({
+                label: this.label,
+                labelId: this.labelId,
+                hasLabelSlot: this.hasLabelSlot,
+                helpText: this.helpText,
+                helpTextId: this.helpTextId,
+                hasHelpTextSlot: this.hasHelpTextSlot
+              })
+            )}
             aria-haspopup="true"
             aria-expanded=${this.isOpen ? 'true' : 'false'}
             tabindex=${this.disabled ? '-1' : '0'}
@@ -443,14 +455,15 @@ export default class SlSelect extends LitElement {
                     exportparts="base:clear-button"
                     class="select__clear"
                     name="x-circle"
+                    library="system"
                     @click=${this.handleClearClick}
                     tabindex="-1"
                   ></sl-icon-button>
                 `
               : ''}
 
-            <span part="icon" class="select__icon">
-              <sl-icon name="chevron-down"></sl-icon>
+            <span part="icon" class="select__icon" aria-hidden="true">
+              <sl-icon name="chevron-down" library="system"></sl-icon>
             </span>
 
             <!-- The hidden input tricks the browser's built-in validation so it works as expected. We use an input

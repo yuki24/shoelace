@@ -4,9 +4,9 @@ import { classMap } from 'lit-html/directives/class-map';
 import { styleMap } from 'lit-html/directives/style-map';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { event, EventEmitter, watch } from '../../internal/decorators';
-import styles from 'sass:./rating.scss';
 import { focusVisible } from '../../internal/focus-visible';
 import { clamp } from '../../internal/math';
+import styles from 'sass:./rating.scss';
 
 /**
  * @since 2.0
@@ -42,7 +42,7 @@ export default class SlRating extends LitElement {
 
   /** The name of the icon to display as the symbol. */
   // @ts-ignore
-  @property() getSymbol = (value?: number) => '<sl-icon name="star-fill"></sl-icon>';
+  @property() getSymbol = (value?: number) => '<sl-icon name="star-fill" library="system"></sl-icon>';
 
   /** Emitted when the rating's value changes. */
   @event('sl-change') slChange: EventEmitter<void>;

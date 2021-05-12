@@ -2,11 +2,12 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators';
 import { classMap } from 'lit-html/directives/class-map';
 import { event, EventEmitter, watch } from '../../internal/decorators';
-import styles from 'sass:./tab-group.scss';
-import { SlTab, SlTabPanel } from '../../shoelace';
 import { focusVisible } from '../../internal/focus-visible';
 import { getOffset } from '../../internal/offset';
 import { scrollIntoView } from '../../internal/scroll';
+import SlTab from '../tab/tab';
+import SlTabPanel from '../tab-panel/tab-panel';
+import styles from 'sass:./tab-group.scss';
 
 /**
  * @since 2.0
@@ -44,6 +45,12 @@ export default class SlTabGroup extends LitElement {
   /** The placement of the tabs. */
   @property() placement: 'top' | 'bottom' | 'left' | 'right' = 'top';
 
+  /**
+   * When set to auto, navigating tabs with the arrow keys will instantly show the corresponding tab panel. When set to
+   * manual, the tab will receive focus but will not show until the user presses spacebar or enter.
+   */
+  @property() activation: 'auto' | 'manual' = 'auto';
+
   /** Disables the scroll arrows that appear when tabs overflow. */
   @property({ attribute: 'no-scroll-controls', type: Boolean }) noScrollControls = false;
 
@@ -76,14 +83,17 @@ export default class SlTabGroup extends LitElement {
     this.resizeObserver.observe(this.nav);
     requestAnimationFrame(() => this.updateScrollControls());
 
-    // Update aria labels if the DOM changes
     this.mutationObserver = new MutationObserver(mutations => {
+      // Update aria labels when the DOM changes
       if (
-        mutations.some(mutation => {
-          return !['aria-labelledby', 'aria-controls'].includes(mutation.attributeName as string);
-        })
+        mutations.some(mutation => !['aria-labelledby', 'aria-controls'].includes(mutation.attributeName as string))
       ) {
         setTimeout(() => this.setAriaLabels());
+      }
+
+      // Sync tabs when disabled states change
+      if (mutations.some(mutation => mutation.attributeName === 'disabled')) {
+        this.syncTabsAndPanels();
       }
     });
     this.mutationObserver.observe(this, { attributes: true, childList: true, subtree: true });
@@ -176,6 +186,10 @@ export default class SlTabGroup extends LitElement {
         }
 
         this.tabs[index].focus({ preventScroll: true });
+
+        if (this.activation === 'auto') {
+          this.setActiveTab(this.tabs[index]);
+        }
 
         if (['top', 'bottom'].includes(this.placement)) {
           scrollIntoView(this.tabs[index], this.nav, 'horizontal');
@@ -302,6 +316,7 @@ export default class SlTabGroup extends LitElement {
     });
   }
 
+  // This stores tabs and panels so we can refer to a cache instead of calling querySelectorAll() multiple times.
   syncTabsAndPanels() {
     this.tabs = this.getAllTabs();
     this.panels = this.getAllPanels();
@@ -330,6 +345,7 @@ export default class SlTabGroup extends LitElement {
                   class="tab-group__scroll-button tab-group__scroll-button--left"
                   exportparts="base:scroll-button"
                   name="chevron-left"
+                  library="system"
                   @click=${this.handleScrollLeft}
                 ></sl-icon-button>
               `
@@ -348,6 +364,7 @@ export default class SlTabGroup extends LitElement {
                   class="tab-group__scroll-button tab-group__scroll-button--right"
                   exportparts="base:scroll-button"
                   name="chevron-right"
+                  library="system"
                   @click=${this.handleScrollRight}
                 ></sl-icon-button>
               `

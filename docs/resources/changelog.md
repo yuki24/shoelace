@@ -6,16 +6,59 @@ Components with the <sl-badge type="warning" pill>Experimental</sl-badge> badge 
 
 _During the beta period, these restrictions may be relaxed in the event of a mission-critical bug._ 🐛
 
-## Next
+## 2.0.0-beta.40
+
+- 🚨 BREAKING: renamed `sl-responsive-embed` to `sl-responsive-media` and added support for images and videos [#436](https://github.com/shoelace-style/shoelace/issues/436)
+- Fixed a bug where setting properties before an element was defined would render incorrectly [#425](https://github.com/shoelace-style/shoelace/issues/425)
+- Fixed a bug that caused all modules to be imported when cherry picking certain components [#439](https://github.com/shoelace-style/shoelace/issues/439)
+- Fixed a bug where the scrollbar would reposition `sl-dialog` on hide causing it to jump [#424](https://github.com/shoelace-style/shoelace/issues/424)
+- Fixed a bug that prevented the project from being built in a Windows environment
+- Improved a11y in `sl-progress-ring`
+- Removed `src/utilities/index.ts` to prevent tree-shaking confusion (please import utilities directly from their respective modules)
+- Removed global `[hidden]` styles so they don't affect anything outside of components
+- Updated to Bootstrap Icons 1.5.0
+- Updated React docs to use [`@shoelace-style/react`](https://github.com/shoelace-style/react)
+- Updated NextJS docs [#434](https://github.com/shoelace-style/shoelace/pull/434)
+- Updated TypeScript to 4.2.4
+
+## 2.0.0-beta.39
+
+- Added experimental `sl-qr-code` component
+- Added `system` icon library and updated all components to use this instead of the default icon library [#420](https://github.com/shoelace-style/shoelace/issues/420)
+- Updated to esbuild 0.8.57
+- Updated to lit 2.0.0-rc.1 and lit-html 2.0.0-rc.2
+
+## 2.0.0-beta.38
+
+- 🚨 BREAKING: `sl-radio` components must be located inside an `sl-radio-group` for proper accessibility [#218](https://github.com/shoelace-style/shoelace/issues/218)
+- Added `sl-radio-group` component [#218](https://github.com/shoelace-style/shoelace/issues/218)
+- Added `--header-spacing`, `--body-spacing`, and `--footer-spacing` custom properties to `sl-drawer` and `sl-dialog` [#409](https://github.com/shoelace-style/shoelace/issues/409)
+- Fixed a bug where `sl-menu-item` prefix and suffix slots wouldn't always receive the correct spacing
+- Fixed a bug where `sl-badge` used `--sl-color-white` instead of the correct design tokens [#407](https://github.com/shoelace-style/shoelace/issues/407)
+- Fixed a bug in `sl-dialog` and `sl-drawer` where the escape key would cause parent components to close
+- Fixed a race condition bug in `sl-icon` [#410](https://github.com/shoelace-style/shoelace/issues/410)
+- Improved focus trap behavior in `sl-dialog` and `sl-drawer`
+- Improved a11y in `sl-dialog` and `sl-drawer` by restoring focus to trigger on close
+- Improved a11y in `sl-radio` with Windows high contrast mode [#215](https://github.com/shoelace-style/shoelace/issues/215)
+- Improved a11y in `sl-select` by preventing the chevron icon from being announced
+- Internal: removed the `options` argument from the modal utility as focus trapping is now handled internally
+
+## 2.0.0-beta.37
 
 - Added `click()` method to `sl-checkbox`, `sl-radio`, and `sl-switch`
+- Added the `activation` prop to `sl-tab-group` to allow for automatic and manual tab activation
+- Added `npm run create <tag>` script to scaffold new components faster
 - Fixed a bug in `sl-tooltip` where events weren't properly cleaned up on disconnect
 - Fixed a bug in `sl-tooltip` where they wouldn't display after toggling `disabled` off and on again [#391](https://github.com/shoelace-style/shoelace/issues/391)
 - Fixed a bug in `sl-details` where `show()` and `hide()` would toggle the control when disabled
+- Fixed a bug in `sl-color-picker` where setting `value` wouldn't update the control
+- Fixed a bug in `sl-tab-group` where tabs that are initially disabled wouldn't receive the indicator on activation [#403](https://github.com/shoelace-style/shoelace/issues/403)
 - Fixed incorrect event names for `sl-after-show` and `sl-after-hide` in `sl-details`
 - Improved a11y for disabled buttons that are rendered as links
-- Improved a11y for `sl-button-group`
+- Improved a11y for `sl-button-group` by adding the correct `role` attribute
+- Improved a11y for `sl-input`, `sl-range`, `sl-select`, and `sl-textarea` so labels and helper text are read properly by screen readers
 - Removed `sl-show`, `sl-hide`, `sl-after-show`, `sl-after-hide` events from `sl-color-picker` (the color picker's visibility cannot be controlled programmatically so these shouldn't have been exposed; the dropdown events now bubble up so you can listen for those instead)
+- Reworked `sl-button-group` so it doesn't require light DOM styles
 
 ## 2.0.0-beta.36
 

@@ -35,9 +35,9 @@
   - [Progress Bar](/components/progress-bar.md)
   - [Progress Ring](/components/progress-ring.md)
   - [Radio](/components/radio.md)
+  - [Radio Group](/components/radio-group.md)
   - [Range](/components/range.md)
   - [Rating](/components/rating.md)
-  - [Responsive Embed](/components/responsive-embed.md)
   - [Select](/components/select.md)
   - [Skeleton](/components/skeleton.md)
   - [Spinner](/components/spinner.md)
@@ -55,8 +55,10 @@
   - [Format Date](/components/format-date.md)
   - [Format Number](/components/format-number.md)
   - [Include](/components/include.md)
+  - [QR Code](/components/qr-code.md)
   - [Relative Time](/components/relative-time.md)
   - [Resize Observer](/components/resize-observer.md)
+  - [Responsive Media](/components/responsive-media.md)
 
 - Design Tokens
   - [Typography](/tokens/typography.md)

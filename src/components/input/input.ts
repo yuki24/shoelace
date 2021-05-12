@@ -3,9 +3,9 @@ import { customElement, property, query, state } from 'lit/decorators';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { classMap } from 'lit-html/directives/class-map';
 import { event, EventEmitter, watch } from '../../internal/decorators';
-import styles from 'sass:./input.scss';
-import { renderFormControl } from '../../internal/form-control';
+import { getLabelledBy, renderFormControl } from '../../internal/form-control';
 import { hasSlot } from '../../internal/slot';
+import styles from 'sass:./input.scss';
 
 let id = 0;
 
@@ -39,8 +39,8 @@ export default class SlInput extends LitElement {
 
   @query('.input__control') input: HTMLInputElement;
 
-  private helpTextId = `input-help-text-${id}`;
   private inputId = `input-${++id}`;
+  private helpTextId = `input-help-text-${id}`;
   private labelId = `input-label-${id}`;
 
   @state() private hasFocus = false;
@@ -55,7 +55,7 @@ export default class SlInput extends LitElement {
   @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** The input's name attribute. */
-  @property() name = '';
+  @property() name: string;
 
   /** The input's value attribute. */
   @property() value = '';
@@ -64,7 +64,7 @@ export default class SlInput extends LitElement {
   @property({ type: Boolean, reflect: true }) pill = false;
 
   /** The input's label. Alternatively, you can use the label slot. */
-  @property() label = '';
+  @property() label: string;
 
   /** The input's help text. Alternatively, you can use the help-text slot. */
   @property({ attribute: 'help-text' }) helpText = '';
@@ -76,7 +76,7 @@ export default class SlInput extends LitElement {
   @property({ attribute: 'toggle-password', type: Boolean }) togglePassword = false;
 
   /** The input's placeholder text. */
-  @property() placeholder = '';
+  @property() placeholder: string;
 
   /** Disables the input. */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -319,8 +319,16 @@ export default class SlInput extends LitElement {
             spellcheck=${ifDefined(this.spellcheck)}
             pattern=${ifDefined(this.pattern)}
             inputmode=${ifDefined(this.inputmode)}
-            aria-labelledby=${this.labelId}
-            aria-describedby=${this.helpTextId}
+            aria-labelledby=${ifDefined(
+              getLabelledBy({
+                label: this.label,
+                labelId: this.labelId,
+                hasLabelSlot: this.hasLabelSlot,
+                helpText: this.helpText,
+                helpTextId: this.helpTextId,
+                hasHelpTextSlot: this.hasHelpTextSlot
+              })
+            )}
             aria-invalid=${this.invalid ? 'true' : 'false'}
             @change=${this.handleChange}
             @input=${this.handleInput}
@@ -339,7 +347,7 @@ export default class SlInput extends LitElement {
                   tabindex="-1"
                 >
                   <slot name="clear-icon">
-                    <sl-icon name="x-circle"></sl-icon>
+                    <sl-icon name="x-circle" library="system"></sl-icon>
                   </slot>
                 </button>
               `
@@ -356,13 +364,13 @@ export default class SlInput extends LitElement {
                   ${this.isPasswordVisible
                     ? html`
                         <slot name="show-password-icon">
-                          <sl-icon name="eye-slash"></sl-icon>
+                          <sl-icon name="eye-slash" library="system"></sl-icon>
                         </slot>
                       `
                     : html`
                         <slot name="hide-password-icon">
                           ${' '}
-                          <sl-icon name="eye"></sl-icon>
+                          <sl-icon name="eye" library="system"></sl-icon>
                         </slot>
                       `}
                 </button>

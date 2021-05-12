@@ -3,9 +3,9 @@ import { customElement, property, query, state } from 'lit/decorators';
 import { classMap } from 'lit-html/directives/class-map';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { event, EventEmitter, watch } from '../../internal/decorators';
-import styles from 'sass:./textarea.scss';
-import { renderFormControl } from '../../internal/form-control';
+import { getLabelledBy, renderFormControl } from '../../internal/form-control';
 import { hasSlot } from '../../internal/slot';
+import styles from 'sass:./textarea.scss';
 
 let id = 0;
 
@@ -28,8 +28,8 @@ export default class SlTextarea extends LitElement {
 
   @query('.textarea__control') input: HTMLTextAreaElement;
 
-  private helpTextId = `textarea-help-text-${id}`;
   private inputId = `textarea-${++id}`;
+  private helpTextId = `textarea-help-text-${id}`;
   private labelId = `textarea-label-${id}`;
   private resizeObserver: ResizeObserver;
 
@@ -41,19 +41,19 @@ export default class SlTextarea extends LitElement {
   @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** The textarea's name attribute. */
-  @property() name = '';
+  @property() name: string;
 
   /** The textarea's value attribute. */
   @property() value = '';
 
   /** The textarea's label. Alternatively, you can use the label slot. */
-  @property() label = '';
+  @property() label: string;
 
   /** The textarea's help text. Alternatively, you can use the help-text slot. */
   @property({ attribute: 'help-text' }) helpText = '';
 
   /** The textarea's placeholder text. */
-  @property() placeholder = '';
+  @property() placeholder: string;
 
   /** The number of rows to display by default. */
   @property({ type: Number }) rows = 4;
@@ -284,7 +284,7 @@ export default class SlTextarea extends LitElement {
             part="textarea"
             id=${this.inputId}
             class="textarea__control"
-            name=${this.name}
+            name=${ifDefined(this.name)}
             .value=${this.value}
             ?disabled=${this.disabled}
             ?readonly=${this.readonly}
@@ -298,7 +298,16 @@ export default class SlTextarea extends LitElement {
             ?autofocus=${this.autofocus}
             spellcheck=${ifDefined(this.spellcheck)}
             inputmode=${ifDefined(this.inputmode)}
-            aria-labelledby=${this.labelId}
+            aria-labelledby=${ifDefined(
+              getLabelledBy({
+                label: this.label,
+                labelId: this.labelId,
+                hasLabelSlot: this.hasLabelSlot,
+                helpText: this.helpText,
+                helpTextId: this.helpTextId,
+                hasHelpTextSlot: this.hasHelpTextSlot
+              })
+            )}
             @change=${this.handleChange.bind(this)}
             @input=${this.handleInput.bind(this)}
             @focus=${this.handleFocus.bind(this)}

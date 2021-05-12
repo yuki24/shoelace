@@ -2,8 +2,8 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators';
 import { styleMap } from 'lit-html/directives/style-map';
 import { event, EventEmitter, watch } from '../../internal/decorators';
-import styles from 'sass:./image-comparer.scss';
 import { clamp } from '../../internal/math';
+import styles from 'sass:./image-comparer.scss';
 
 /**
  * @since 2.0
@@ -128,7 +128,7 @@ export default class SlImageComparer extends LitElement {
             tabindex="0"
           >
             <slot name="handle-icon">
-              <sl-icon class="image-comparer__handle-icon" name="grip-vertical"></sl-icon>
+              <sl-icon class="image-comparer__handle-icon" name="grip-vertical" library="system"></sl-icon>
             </slot>
           </div>
         </div>

@@ -4,10 +4,11 @@ import { classMap } from 'lit-html/directives/class-map';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { styleMap } from 'lit-html/directives/style-map';
 import { event, EventEmitter, watch } from '../../internal/decorators';
-import styles from 'sass:./color-picker.scss';
-import { SlDropdown, SlInput } from '../../shoelace';
-import color from 'color';
 import { clamp } from '../../internal/math';
+import SlDropdown from '../dropdown/dropdown';
+import SlInput from '../input/input';
+import color from 'color';
+import styles from 'sass:./color-picker.scss';
 
 /**
  * @since 2.0
@@ -40,7 +41,6 @@ export default class SlColorPicker extends LitElement {
   @query('[part="preview"]') previewButton: HTMLButtonElement;
   @query('.color-dropdown') dropdown: SlDropdown;
 
-  private bypassValueParse = false;
   private lastValueEmitted: string;
 
   @state() private inputValue = '';
@@ -551,12 +551,7 @@ export default class SlColorPicker extends LitElement {
       this.inputValue = this.opacity ? currentColor.hexa : currentColor.hex;
     }
 
-    // Setting this.value will trigger the watcher which parses the new value. We want to bypass that behavior because
-    // we've already parsed the color here and conversion/rounding can lead to values changing slightly. After the next
-    // update, the usual behavior is restored.
-    this.bypassValueParse = true;
     this.value = this.inputValue;
-    this.updateComplete.then(() => (this.bypassValueParse = false));
   }
 
   @watch('format')
@@ -570,19 +565,17 @@ export default class SlColorPicker extends LitElement {
   }
 
   @watch('value')
-  handleValueChange(newValue: string, oldValue: string) {
-    if (!this.bypassValueParse) {
-      const newColor = this.parseColor(newValue);
+  handleValueChange(oldValue: string, newValue: string) {
+    const newColor = this.parseColor(newValue);
 
-      if (newColor) {
-        this.inputValue = this.value;
-        this.hue = newColor.hsla.h;
-        this.saturation = newColor.hsla.s;
-        this.lightness = newColor.hsla.l;
-        this.alpha = newColor.hsla.a * 100;
-      } else {
-        this.inputValue = oldValue;
-      }
+    if (newColor) {
+      this.inputValue = this.value;
+      this.hue = newColor.hsla.h;
+      this.saturation = newColor.hsla.s;
+      this.lightness = newColor.hsla.l;
+      this.alpha = newColor.hsla.a * 100;
+    } else {
+      this.inputValue = oldValue;
     }
 
     if (this.value !== this.lastValueEmitted) {
@@ -704,6 +697,7 @@ export default class SlColorPicker extends LitElement {
           >
             <sl-icon
               name="check"
+              library="system"
               class=${classMap({
                 'color-picker__copy-feedback': true,
                 'color-picker__copy-feedback--visible': this.showCopyFeedback,
