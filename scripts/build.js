@@ -40,7 +40,9 @@ try {
     // Public utilities
     ...(await glob('./src/utilities/**/!(*.(style|test)).ts')),
     // Theme stylesheets
-    ...(await glob('./src/themes/**/!(*.test).ts'))
+    ...(await glob('./src/themes/**/!(*.test).ts')),
+    // Translations
+    ...(await glob('./src/translations/**/!(*.test).ts'))
   ];
 
   const buildResult = await esbuild
