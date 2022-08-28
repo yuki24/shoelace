@@ -122,6 +122,20 @@ describe('<sl-input>', () => {
       expect(keydownHandler).to.have.been.calledOnce;
       expect(submitHandler).to.not.have.been.called;
     });
+
+    it('should not submit the form when pressing enter in a composition session', async () => {
+      const form = await fixture<HTMLFormElement>(html` <form><sl-input></sl-input></form> `);
+      // const input = form.querySelector('sl-input')!;
+      const submitHandler = sinon.spy((event: SubmitEvent) => event.preventDefault());
+
+      form.addEventListener('submit', submitHandler);
+      await sendKeys({ press: 'あ' });
+      await sendKeys({ press: 'Enter' });
+      await sendKeys({ press: 'Enter' });
+      await waitUntil(() => submitHandler.calledOnce);
+
+      expect(submitHandler).to.have.been.calledOnce;
+    });
   });
 
   describe('when resetting a form', () => {

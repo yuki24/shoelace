@@ -69,6 +69,8 @@ export default class SlInput extends ShoelaceElement {
   @state() private hasFocus = false;
   @state() private isPasswordVisible = false;
 
+  private wasComposing = false;
+
   /** The input's type. */
   @property({ reflect: true }) type:
     | 'date'
@@ -311,16 +313,19 @@ export default class SlInput extends ShoelaceElement {
 
   handleKeyDown(event: KeyboardEvent) {
     const hasModifier = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+    const isComposing = this.wasComposing || event.isComposing;
 
     // Pressing enter when focused on an input should submit the form like a native input, but we wait a tick before
     // submitting to allow users to cancel the keydown event if they need to
-    if (event.key === 'Enter' && !hasModifier) {
+    if (event.key === 'Enter' && !hasModifier && !isComposing) {
       setTimeout(() => {
         if (!event.defaultPrevented) {
           this.formSubmitController.submit();
         }
       });
     }
+
+    this.wasComposing = event.key !== 'Enter' && event.key !== 'Process' && event.isComposing;
   }
 
   handlePasswordToggle() {
@@ -330,6 +335,12 @@ export default class SlInput extends ShoelaceElement {
   @watch('value', { waitUntilFirstUpdate: true })
   handleValueChange() {
     this.invalid = !this.input.checkValidity();
+  }
+
+  handleCompositionEnd(event: CompositionEvent) {
+    if (event.data === "") {
+      this.wasComposing = false;
+    }
   }
 
   render() {
@@ -420,6 +431,7 @@ export default class SlInput extends ShoelaceElement {
               @keydown=${this.handleKeyDown}
               @focus=${this.handleFocus}
               @blur=${this.handleBlur}
+              @compositionend=${this.handleCompositionEnd}
             />
 
             ${hasClearIcon
