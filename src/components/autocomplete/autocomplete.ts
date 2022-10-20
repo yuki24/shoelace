@@ -158,11 +158,16 @@ export default class SlAutocomplete extends LitElement {
           @sl-input=${this.handleSlInput}
           @keydown=${this.handleKeydown}
         >
-          <slot name="trigger"></slot>
+          <slot
+            name="trigger"
+            role="combobox"
+            aria-controls="menu"
+            aria-expanded=${this.shouldDisplayAutoComplete ? 'true' : 'false'}
+          ></slot>
         </div>
 
         <sl-dropdown ?open=${this.shouldDisplayAutoComplete} @sl-after-hide=${this.handleSlAfterHide}>
-          <sl-menu>
+          <sl-menu autocomplete>
             <slot
               aria-hidden=${shouldDisplayLoadingText ? 'true' : 'false'}
               style="${styleMap({ display: shouldDisplayLoadingText ? 'none' : 'block' })}"

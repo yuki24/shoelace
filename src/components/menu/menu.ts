@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, query, property } from 'lit/decorators.js';
 import { emit } from '../../internal/event';
 import ShoelaceElement from '../../internal/shoelace-element';
 import { getTextContent } from '../../internal/slot';
@@ -24,17 +24,19 @@ export default class SlMenu extends ShoelaceElement {
 
   @query('slot') defaultSlot: HTMLSlotElement;
 
+  @property({ type: Boolean, reflect: true }) autocomplete: Boolean = false;
+
   private typeToSelectString = '';
   private typeToSelectTimeout: number;
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'menu');
+    this.setAttribute('role', this.getMenuRole());
   }
 
   getAllItems(options: { includeDisabled: boolean } = { includeDisabled: true }) {
     return [...this.defaultSlot.assignedElements({ flatten: true })].filter((el: HTMLElement) => {
-      if (el.getAttribute('role') !== 'menuitem') {
+      if (el.getAttribute('role') !== this.getMenuItemRole()) {
         return false;
       }
 
@@ -44,6 +46,14 @@ export default class SlMenu extends ShoelaceElement {
 
       return true;
     }) as SlMenuItem[];
+  }
+
+  getMenuRole() {
+    return this.autocomplete ? 'listbox' : 'menu';
+  }
+
+  getMenuItemRole() {
+    return this.autocomplete ? 'option' : 'menuitem';
   }
 
   /**
@@ -65,6 +75,8 @@ export default class SlMenu extends ShoelaceElement {
     // Update tab indexes
     items.forEach(i => {
       i.setAttribute('tabindex', i === activeItem ? '0' : '-1');
+      i.setAttribute('aria-selected', i === activeItem ? 'true' : 'false');
+      i.setAttribute('role', 'option');
     });
   }
 
@@ -165,7 +177,7 @@ export default class SlMenu extends ShoelaceElement {
   handleMouseDown(event: MouseEvent) {
     const target = event.target as HTMLElement;
 
-    if (target.getAttribute('role') === 'menuitem') {
+    if (target.getAttribute('role') === this.getMenuItemRole()) {
       this.setCurrentItem(target as SlMenuItem);
     }
   }

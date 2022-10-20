@@ -40,6 +40,8 @@ export default class SlMenuItem extends ShoelaceElement {
   /** Draws the item in a checked state. */
   @property({ type: Boolean, reflect: true }) checked = false;
 
+  @property({ type: Boolean, reflect: true }) autocomplete: Boolean = false;
+
   /** A unique value to store in the menu item. This can be used as a way to identify menu items when selected. */
   @property() value = '';
 
@@ -47,7 +49,7 @@ export default class SlMenuItem extends ShoelaceElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   firstUpdated() {
-    this.setAttribute('role', 'menuitem');
+    this.setAttribute('role', this.autocomplete ? 'option' : 'menuitem');
   }
 
   /** Returns a text label based on the contents of the menu item's default slot. */

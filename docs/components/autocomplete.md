@@ -8,11 +8,11 @@ Autocompletes displays suggestions as you type.
 <sl-autocomplete autofilter class="language-autocomplete">
   <sl-input slot="trigger" class="language-input"></sl-input>
 
-  <sl-menu-item value="english">English</sl-menu-item>
-  <sl-menu-item value="mandarin">Mandarin</sl-menu-item>
-  <sl-menu-item value="hindi">Hindi</sl-menu-item>
-  <sl-menu-item value="spanish">Spanish</sl-menu-item>
-  <sl-menu-item value="french">French</sl-menu-item>
+  <sl-menu-item value="english" autocomplete>English</sl-menu-item>
+  <sl-menu-item value="mandarin" autocomplete>Mandarin</sl-menu-item>
+  <sl-menu-item value="hindi" autocomplete>Hindi</sl-menu-item>
+  <sl-menu-item value="spanish" autocomplete>Spanish</sl-menu-item>
+  <sl-menu-item value="french" autocomplete>French</sl-menu-item>
 </sl-autocomplete>
 
 <script>
